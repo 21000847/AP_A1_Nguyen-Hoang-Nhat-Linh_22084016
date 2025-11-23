@@ -139,8 +139,21 @@ In this situation, 'Horsepower' is converted to numeric so calculations work. Th
 
 Additionally, **"mutate()"** and **"ifelse()"** were used to select only the NAs to replace with the calculated "hp_median" above. This would eventually preserves the integrity of the existing data.
 
+## 1.4 Select the appropriate chart type and display: horsepower distribution
 
-
+```{r}
+# Histogram for distribution 
+ggplot(engines, aes(x = Horsepower)) +
+  geom_histogram( # this creates a histogram
+    binwidth = 10, fill = "skyblue", color = "black") +
+  geom_vline(aes(xintercept = median(Horsepower)), color="red", linetype="dashed") +
+  # the line above creates an abline that shows the median for 'Horsepower'
+  labs(title = "Distribution of Engine Horsepower", # this is the name for the histogram
+       subtitle = paste("Median Horsepower =", hp_median), # this adds a sub-title
+       x = "Horsepower", y = "Count") + # names the x and y axis
+  theme_minimal() # removes the default gray background
+```
+As the variable 'Horsepower' is a numeric variable, its distribution can be visualized using a histogram. The abline (red line) shows where the middle value is. This makes the shape and central tendency of horsepower becomes much easier to understand. Our red line here shows that the median horsepower is around 102.
 
 
 
