@@ -409,4 +409,32 @@ From the chart above, we can see that some trouble types are strongly associated
 
 Overall, with the purpose to compare between different engine types, it is best if we employ a visualisation to better spot the differences.
 
+# Task 4:
 
+## Pre-requisite fix
+
+Before any analysis in Task 4, we explicitly assign **"trouble_data <- full_data"**. As previously, 'full_data' was used to filter the maintenance records and then joined. This step is to make sure that we can use a consistent set where only vehicles with confirmed or suspected faults. 
+
+```{r}
+# Previously we created "full_data" that filters out the "No error"
+# Here, we would want to define the "trouble_data" to ensure the rest of the code runs smoothly.
+trouble_data <- full_data
+```
+
+Doing this prevents accidental re-use of the full unfiltered maintenance table, clarifies intent to readers of the script, and makes the flow much smoother.
+
+## 4.1 Most frequent error codes
+
+Here, to find the most frequent code we use the frequency count, **"count(ErrorCodes, sort = TRUE)"** to aggregate and order ErrorCodes from most to least common (with most common at the top). Along with **"slice(1)"** function to isolate and pick the most frequent code away from the rest.
+
+```{r}
+# By grouping error codes and count them to identify the most relevant issue
+frequent_error <- trouble_data %>%
+  count(ErrorCodes, sort = TRUE) %>% # aggregates the data and sorts them from most to least common
+  slice(1) # extracts the single most frequent code
+
+print(paste("Most frequent error code:", frequent_error$ErrorCodes))
+```
+In our case, the most frequent error code is **'1'**. Practically, this means that among the vehicles flagged as having problems, the diagnostic labeled as 1 appears most frequently. 
+
+Because we previously removed **'0'** entries, this is not a “no issue, it just genuinely identifies the single most common problem type that mechanics recorded ( "Error Code 1").
