@@ -287,6 +287,49 @@ ggplot(car_engine_merged, aes(x = FuelTypes, y = CityMpg, fill = FuelTypes)) +
 
 To better see the differences, a boxplot displaying these 2 numeric variables. Here, we can see that diesel cars have a highe median 'CityMpg', and the majority distribution sits above gasoline's.
 
+## 3.2  How does DriveWheels affect fuel efficiency (CityMpg and HighwayMpg)?
 
+To understand how the vehicle's drive configuration influences fuel efficiency, MPG values were grouped. In this problem, **"group_by()?**" and **"summarise()"** were used for both 'CityMpg' and HighwayMpg to compute indicators of efficiency for each type.
+
+In short, the **"group_by()"** will separate the data by drive type and the **"summarise()"** will compute the mean Mpg for each group ('CityMpg' and 'HighwayMpg'). This would allow direct comparison of fuel efficiency across different types of drive.
+
+```{r}
+# Group by DriveWheels and calculate mean MPG metrics to quantify the relationship.
+efficiency_summary <- car_engine_merged %>%
+  group_by(DriveWheels) %>% # separates the data by drive type
+  summarise( # compute the mean Mpg for each group
+    Avg_CityMpg = mean(CityMpg, na.rm = TRUE), # mean of CityMpg
+    Avg_HwyMpg = mean(HighwayMpg, na.rm = TRUE) # mean of HighwayMpg
+  )
+
+print("Average City and Highway MPG by Drive Wheels:")
+print(efficiency_summary)
+```
+
+From the table above, we can see the following trends:
+
+- **4wd** vehicles (at 27.22) shows lower Mpg than Fwd vehicles , and slightly higher than Rwd. Even so, it is still reasonable to say that 4wd systems does add significant weight and require more engine output to move both axles.
+
+- **Fwd** vehicles (34.23) has the highest Mpg in both city and highway conditions. Here, we can see that Fwd vehicles offer a much more fuel-efficient type of vehicle.
+
+- **Rwd** vehicles, on the other hand, shows lowest fuel efficiency (at 25.64).This indicates that regardless, Rwd would be the type of vehicles that cost energy the most.
+
+### Visualisation
+
+To put this comparison into better visualisation, we can use boxplot to see the entire distribution of 'CityMpg' across the three ordered 'DriveWheels' groups.
+
+```{r}
+# For CityMpg
+ggplot(car_engine_merged, aes(x = DriveWheels, y = CityMpg, fill = DriveWheels)) +
+  geom_boxplot() +  # This creates a box plot
+  labs(title = "Impact of Drive Wheels on City MPG",
+       y = "City Miles Per Gallon (MPG)",
+       x = "Drive Wheels") +
+  theme_minimal() # removes the default gray background
+```
+
+The boxplot shows the exact trends the were found previously. Fwd vehicles show the highest median and widest overall distribution, indicating a diverse set of fuel-efficient models.
+
+In contrast, Rwd and 4wd vehicles cluster toward lower MPG values. The visualization makes it evident that Drive Wheels plays an important role in vehicle efficiency.
 
 
