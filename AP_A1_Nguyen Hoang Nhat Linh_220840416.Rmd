@@ -438,3 +438,90 @@ print(paste("Most frequent error code:", frequent_error$ErrorCodes))
 In our case, the most frequent error code is **'1'**. Practically, this means that among the vehicles flagged as having problems, the diagnostic labeled as 1 appears most frequently. 
 
 Because we previously removed **'0'** entries, this is not a “no issue, it just genuinely identifies the single most common problem type that mechanics recorded ( "Error Code 1").
+
+## 4.2 Factors influcencing maintenance methods
+
+As we can see, Maintenance method here are categorized as Adjustment, Replacement, or Urgent care based on the severity. 
+
+Therefore, by analysing the vehicle's characteristics (**'BodyStyles'** and **'FuelTypes'**), we can understand if vehicle specifications that influence the repair methods.
+
+### Factor 1: BodyStyles
+
+```{r}
+# Analysing 'BodyStyles' vs 'Maintenance'
+print("BodyStyles vs Maintenance Methods")
+
+# Check the contingency table
+## This creates a table to summarize BodyStyles and Methods
+table_body_method <- table(trouble_data$BodyStyles, trouble_data$Methods) 
+print(table_body_method)
+```
+The contingency table table **"(trouble_data$BodyStyles, trouble_data$Methods)"** lists the raw counts of how many times each maintenance method occurs for each body style. Raw counts let us see absolute workload differences, which is useful for statistical test and the visualization later on.
+
+From the table above, we can also see that **"Sedan"** and **"Hatchback"** accounts for the majority of maintenance events (especially those in urgent care). This reflects their higher maintenance frequency in overall vehicle population.
+
+### A filled barchart to visualise the proportion of 'Methods' by 'BodyStyle'
+
+In order for us to better visualise the porpotions of maintenance methods over body style, it is best to use a filled bar chart. 
+
+This is better to use when the table of comparison is not complex and distribution within the same total are required. As it transforms counts into proportions, allowing us to have a fair comparison across body styles with different sample sizes.
+
+```{r}
+# Plotting Proportion of Maintenance 'Methods' by 'BodyStyle'
+ggplot(trouble_data, aes(x = BodyStyles, fill = Methods)) + 
+  # places 'BodyStyles' on the x axis and fill of the bar segments based on the 'Methods'
+  geom_bar(position = "fill") + 
+  # creates a filled bar chart, allows us to compare proportions across groups of different sizes
+  labs(title = "Proportion of Maintenance Methods by Body Style",
+       subtitle = "Do certain body styles require more urgent care?",
+       y = "Proportion", x = "Body Style") +
+  theme_minimal() + # removes the default gray background
+  # the one below rotates the labels 45 degrees to prevent overlapping
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))   
+```
+
+From the filled barchart above, we can see and confirm the following elements:
+
+- **Sedans** and **hatchbacks** show slightly larger proportional shares of 'Replacement' and 'Urgent care' than other body styles. That implies that these styles have somewhat greater severity in maintenance.
+
+- **Convertibles** show no urgent care in this dataset. Meaning that, either they experience fewer severe failures, or there are too few convertibles to observe.
+
+- **Hardtops** show a relatively high urgent-care proportion relative to their small counts. This could indicate that when hardtops fail, the problems are more often severe.
+
+### Factor 2: FuelTypes
+
+```{r}
+# Analysing 'FuelTypes' vs 'Maintenance'
+print("FuelTypes vs Maintenance Methods")
+
+# Check the contingency table
+table_fuel_method <- table(trouble_data$FuelTypes, trouble_data$Methods) 
+# creates the tabel for 'FuelTypes' and 'Methods' in 'trouble_data'
+print(table_fuel_method)
+```
+The table above regarding fuel types, shows us counts of repair methods split by fuel type. As we can see, gas vehicles overwhelmingly account for the total number of record.
+
+Because gas vehicles are numerically more common, raw counts alone will bias any interpretation. By converting to proportions using **"(position = "fill")"** (creates a filled bar chart) will help us to have a better side by side comparison between diesel and gas vehicles.
+
+```{r}
+# Plotting Proportion of Maintenance 'Methods' by 'FuelTypes'
+ggplot(trouble_data, aes(x = FuelTypes, fill = Methods)) + 
+  # places 'FuelTypes' on the x axis and fill of the bar segments based on the 'Methods'
+  geom_bar(position = "fill") + # creates the fill bar chart
+  labs(title = "Proportion of Maintenance Methods by Fuel Type", 
+       # title 
+       subtitle = "Comparison of maintenance severity between Diesel and Gas", 
+       # sub-title to explain the chart
+       y = "Proportion", x = "Fuel Type") + # names the x and y axis
+  theme_minimal() # removes the default gray background
+```
+
+Similar to Factor 1, this proportional plot is used to compare the relative severity of maintenance required between the two fuel types, compensating for the large difference in sample size. From this chart, we can see the following trends:
+
+- **Diesel vehicles** shows no urgent care in the sample and a larger share of replacements. This pattern may reflect that when diesel engines fail, they often owing to planned replacement rather than emergency repairs.
+
+- **Gasoline vehicles**, on the other hand, include a small but visible proportion of urgent care events. This indicates that gas cars may experience more unexpected failures that would require urgent care.
+
+### Overall conclusion
+
+From these patterns, we can say that diesel engines are typically built for durability and operate with different characteristics, which lead to different failure modes than gasoline engines. Also, diesel cars maintenance severity does tends to be lower compared to gasoline cars owing to their mechanical build.
