@@ -542,23 +542,11 @@ Process used to submit:
 git clone [https://github.com/21000847/AP_A1_Nguyen-Hoang-Nhat-Linh_22084016.git]
 
 cd AP_A1_Nguyen-Hoang-Nhat-Linh_22084016
-
-git add .
-
-git commit -m "Submitting assignment files"
-
-git push
 ```
 
 To manage the version control for this assignment, the following Git commands in Git Bash shows my progress for each task:
 
 ```bash
-
-# Initial setup
-git init
-git add .
-git commit -m "Initial commit: Load datasets and setup RMarkdown"
-
 # Task 1: Data Cleaning
 git add .
 git commit -m "Task 1.1: Inspect data, find '?' and replace with NA"
