@@ -354,3 +354,35 @@ full_data <- maint %>%
 Using **"(filter(ErrorCodes != "0"))"**, we exclude the records that are classified as **"No error"** (0).
 
 After filtering, the 'Maintenance' records were joined with the 'Automobile' and 'Engine' datasets using inner joins. By using inner join, we ensure that only vehicles that appear in all three datasets are included, creating a clean dataset that represents only problematic vehicles.
+
+## 3.4 Top 5 common troubles are related to
+
+Here, the resulting **"full_data"** contains only confirmed or suspected trouble vehicles. We first use **"count()"** to automatically group all indentical **"Troubles"** descriptions and summarize their occurrences, sorting the results to put the most frequent one first. 
+
+Finally, as the final step, we use **"head(5)"** to select and display only the five troubles with the highest counts.
+
+```{r}
+# Find the top 5 common troubles by aggregating 'Troubles' to find the most frequent descriptions.
+top_troubles <- full_data %>%
+  count(Troubles, sort = TRUE) %>% 
+  # groups the data by every unique entry in the Troubles column
+  # then counts how many times each unique trouble appears,
+  # then sorts the results from highest to lowest.
+  head(5) # selects and keeps only the top 5 rows from the sorted list
+
+print("Top 5 Common Troubles are related to:")
+print(top_troubles)
+```
+
+Here we can see the 5 most common troubles are:
+
+1. Cylinders
+
+2. Chassis
+
+3. Ignition (finding)
+
+4. Noise (finding)
+
+5. Worn tires
+
