@@ -182,8 +182,45 @@ From the boxplot above, we can see that two 'dohc' (red) and 'ohcv' (blue) gener
  
 We can easily spot several outliers that indicates an "irregular" in what is generally shown. For instance, while most 'ohc' (pink) engines are low-power, some specific models have much higher output.
 
+# 2.2 Write the code to investigate the distribution of the horsepower across the groups of the engine sizes (e.g., 60-90, 91-190, 191-299, 300+). Henceforth, visualise the findings.
+
+To know the distribution of horsepower across groups of engines sizes, we will need to create bins that represent each groups (60-90, 91-190, 191-299, 300+). Here, we know that 'EngineSize' is a continuous variable. 
+
+To create bins, the function **"mutate()"** was used to create a new column 'SizeGroup' and **"cut()"** was used to categorize rows base on their 'EngineSize' variable.
+
+```{r}
+# Create bins: 60-90, 91-190, 191-299, 300+
+engines <- engines %>%
+  mutate(SizeGroup # create a new column 'SizeGroup'
+         = cut(EngineSize, # categorize rows base on their 'EngineSize'
+                         breaks = c(59, 90, 190, 299, Inf), 
+                         labels = c("60-90", "91-190", "191-299", "300+")))
 
 
+# Visualisations
+ggplot(engines, aes(x = Horsepower, fill = SizeGroup)) + # defines the x and y axis
+  geom_histogram( # Creates a histogram
+    binwidth = 15, color = "black", alpha = 0.7) + 
+  # groups horsepower into bins 15 units wide, black colored with 0.7 opacity
+  facet_wrap(~SizeGroup, scales = "free_y") + 
+  # splits the single chart into separate mini-charts for each 'SizeGroup'
+  labs(title = "Horsepower Distribution by Engine Size Group", # chart's title
+       x = "Horsepower", y = "Frequency") +  # this names the x and y axis
+  theme_minimal() # removes the default gray background
+
+```
+
+We generally expect a positive correlation such as larger engine size groups (300+), should correlate with the higher horsepower ranges in the histogram.
+
+Here, the histogram confirms it. We can see a positive correlation between engine sizes and horsepower as follow:
+
+- **Small engines (60-90)** and **(91-190)**: Strictly concentrated at the lower end of the horsepower scale.
+
+- **Medium engines (191-299)**: Interestingly, while most fall in the average range, some outliers does shows the highest horsepower.
+
+- **Large engines (300+)**: Here, it is reasonable when large engines fall mostly in high horsepower ranges. However, the distribution only falls in 2 specific level of horsepower.
+
+As we can observe, most of the times the larger the engines the horsepower would be higher as well. However, some outliers (special cases) would offer a different horsepower outcome. This also means that, not all engine size larger than 300+ would bring back the best 'Horsepower' range.
 
 
 
