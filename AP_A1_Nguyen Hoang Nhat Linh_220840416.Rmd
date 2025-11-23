@@ -386,3 +386,27 @@ Here we can see the 5 most common troubles are:
 
 5. Worn tires
 
+
+## 3.5 Do the troubles differ between engine types?  
+
+To explore whether certain problems are more common in specific engine types, a bar stacked chart would offer best as it would show both the total frequency of each trouble and how those issues are distributed across engine types.
+
+In this visualiation, **"coord_flip()"** was applied to rotate the chart, making long trouble names easier to read and improving interpretability.
+
+```{r, fig.width = 12, fig.height = 8, out.width = "80%"}
+# A visualization of stacked bar chart to compare the count of troubles across Engine Types.
+ggplot(full_data, aes(x = Troubles, fill = EngineType)) + 
+  # sets 'Troubles' as category to be counted and 'EngineType' to fill (all using 'full_data')
+  geom_bar(position = "stack") + # this creates a stack barchat
+  coord_flip() + # rotates the chart, making long names easier to read
+  labs(title = "Troubles Distribution by Engine Type", # title
+       subtitle = "Count of troubles per engine type", # sub-title (to explain further)
+       x = "Trouble Description", y = "Count") +  # x and y axis
+  theme_minimal() # removes the default gray background
+```
+
+From the chart above, we can see that some trouble types are strongly associated with particular engine types. For example, how 'ohc' engines appear to have the largest share of issues across many categories. 
+
+Overall, with the purpose to compare between different engine types, it is best if we employ a visualisation to better spot the differences.
+
+
