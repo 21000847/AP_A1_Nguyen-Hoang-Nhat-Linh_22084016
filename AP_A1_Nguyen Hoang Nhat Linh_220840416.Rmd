@@ -298,7 +298,7 @@ In short, the **"group_by()"** will separate the data by drive type and the **"s
 efficiency_summary <- car_engine_merged %>%
   group_by(DriveWheels) %>% # separates the data by drive type
   summarise( # compute the mean Mpg for each group
-    Avg_CityMpg = mean(CityMpg, na.rm = TRUE), # mean of CityMpg
+   gitAvg_CityMpg = mean(CityMpg, na.rm = TRUE), # mean of CityMpg
     Avg_HwyMpg = mean(HighwayMpg, na.rm = TRUE) # mean of HighwayMpg
   )
 
@@ -332,4 +332,25 @@ The boxplot shows the exact trends the were found previously. Fwd vehicles show 
 
 In contrast, Rwd and 4wd vehicles cluster toward lower MPG values. The visualization makes it evident that Drive Wheels plays an important role in vehicle efficiency.
 
+## 3.3  Filter out those engines in the dataset that have trouble or are suspected of having trouble
 
+To focus specifically on vehicles with mechanical issues, the Maintenance dataset was filtered to include only records with **ErrorCodes $\neq$ 0**. 
+
+First of all,  we filer as it is important as it allows us to analyze only vehicles that genuinely exhibit issues. As a code = 0 means “No error,” while negative or positive values indicate faults or suspected problems.
+
+```{r}
+# Merge all three tables and filter out 'No error' records (ErrorCodes != "0") 
+# to focus solely on vehicles confirmed or suspected of having a failure.
+
+full_data <- maint %>%
+  filter(ErrorCodes != "0") %>% # filters to keep rows where ErrorCodes is not equal "0"
+  inner_join(autos, by = "PlateNumber")%>% 
+  # merges filtered 'maint' with 'autos' based on the matching vehicle 'PlateNumber' 
+  # to link the trouble records to specific vehicles
+  inner_join(engines_unique, by = "EngineModel") 
+# merges the resulting data with 'engines_unique' base on 'EngineModel'
+```
+
+Using **"(filter(ErrorCodes != "0"))"**, we exclude the records that are classified as **"No error"** (0).
+
+After filtering, the 'Maintenance' records were joined with the 'Automobile' and 'Engine' datasets using inner joins. By using inner join, we ensure that only vehicles that appear in all three datasets are included, creating a clean dataset that represents only problematic vehicles.
