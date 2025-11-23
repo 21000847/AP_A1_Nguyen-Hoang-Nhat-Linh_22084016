@@ -525,3 +525,87 @@ Similar to Factor 1, this proportional plot is used to compare the relative seve
 ### Overall conclusion
 
 From these patterns, we can say that diesel engines are typically built for durability and operate with different characteristics, which lead to different failure modes than gasoline engines. Also, diesel cars maintenance severity does tends to be lower compared to gasoline cars owing to their mechanical build.
+
+# Task 5
+
+## Submit Git
+
+Process used to submit:
+
+1. Cloning the repository to local desktop
+2. Entering the project directory on Git Bash
+3. Include all assignment files (RMarkdown, PDF, Scripts). Before that, I need to copy paste the files into the local folder then proceed the following code on Git Bash
+4. Commit the changes with a message to note the changes
+5. Push the submission to GitHub
+
+```
+git clone [https://github.com/21000847/AP_A1_Nguyen-Hoang-Nhat-Linh_22084016.git]
+
+cd AP_A1_Nguyen-Hoang-Nhat-Linh_22084016
+
+git add .
+
+git commit -m "Submitting assignment files"
+
+git push
+```
+
+To manage the version control for this assignment, the following Git commands in Git Bash shows my progress for each task:
+
+```bash
+
+# Initial setup
+git init
+git add .
+git commit -m "Initial commit: Load datasets and setup RMarkdown"
+
+# Task 1: Data Cleaning
+git add .
+git commit -m "Task 1.1: Inspect data, find '?' and replace with NA"
+git add .
+git commit -m "Loading datasets"
+git add .
+git commit -m "Task 1.1: Count ? and replace with NA".
+git add .
+git commit -m "Convert categorical variables BodyStyles, FuelTypes, ErrorCodes to factors"
+git add .
+git commit -m "Replace the missing values in column Horsepower with the median horsepower"
+git add
+git commit -m "Horsepower distribution visualisation"
+git push
+
+# Task 2: Engine Analysis
+git add .
+git commit -m "Task 2.1:  1 The code to analyse the distribution of the horsepower across the engine types"
+git add .
+git commit -m "Task 2.2: The distribution of the horsepower across the groups"
+git add .
+git push
+
+# Task 3: Fuel & Troubles Analysis
+git add .
+git commit -m "Task 3: Clean data"
+git add .
+git commit -m "Task 3.2: Do diesel cars have higher average CityMpg than gasoline cars? Provide statistical evidence"
+git add .
+git commit -m "Task 3.2: How does DriveWheels affect fuel efficiency (CityMpg and HighwayMpg)?"
+git add .
+git commit -m "Task 3.3: Filter out those engines in the dataset that have trouble or are suspected of having trouble"
+git add .
+git commit -m "Task 3.4: Top 5 common troubles are related to"
+git add .
+git commit -m "Task 3.5: Do the troubles differ between engine types?"
+git push
+
+# Task 4: Maintenance Analysis
+git add .
+git commit -m "Task 4.1: Most frequent error codes"
+git add .
+git commit -m "Task 4.2: 2 Factors influcencing maintenance methods"
+git push
+
+# Task 5: Final Submission
+git add .
+git commit -m "Insert Git, Knit and submission"
+git push
+```
