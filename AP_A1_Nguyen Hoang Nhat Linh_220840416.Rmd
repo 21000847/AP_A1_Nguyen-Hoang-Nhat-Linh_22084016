@@ -155,7 +155,32 @@ ggplot(engines, aes(x = Horsepower)) +
 ```
 As the variable 'Horsepower' is a numeric variable, its distribution can be visualized using a histogram. The abline (red line) shows where the middle value is. This makes the shape and central tendency of horsepower becomes much easier to understand. Our red line here shows that the median horsepower is around 102.
 
+# Task 2: 
 
+## 2.1 The code to analyse the distribution of the horsepower across the engine types.
+
+Here, we would want to see the 'Horsepower' (a numeric variable) and we would want to see it across engine categories (in our case is Engine Types).
+
+A boxplot would show the median, this helps us to quickly identify patterns, such as which engine types are generally more powerful or more consistent in their performance. Most importantly, it shows the overall spread of horsepower values, and any extreme points that stand out as outliers. 
+
+Therefore, employing a box plot would allow us to have a clearer understanding of how horsepower is distributed across the different engine designs.
+
+```{r}
+# To use boxplots to analyse the distribution and 
+# compare continuous variable (in our case, horsepower) across multiple categories.
+
+ggplot(engines, aes(x = EngineType, y = Horsepower, fill = EngineType)) + # this defines the x and y
+  geom_boxplot() + # this creates a box plot
+  labs(title = "Horsepower Distribution by Engine Type", # title for the box plot
+       x = "Engine Type", y = "Horsepower") + # this names the x and y axis
+  theme_minimal() + # removes the default gray background
+  # the one below rotates the labels 45 degrees to prevent overlapping
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) 
+```
+
+From the boxplot above, we can see that two 'dohc' (red) and 'ohcv' (blue) generally produces a higher median horsepower compared to other types. However, the 'ohc' (green) shows a great range of horsepower.
+ 
+We can easily spot several outliers that indicates an "irregular" in what is generally shown. For instance, while most 'ohc' (pink) engines are low-power, some specific models have much higher output.
 
 
 
