@@ -1,0 +1,74 @@
+---
+title: "Assignment"
+author: "Nguyen Hoang Nhat Linh"
+date: "2025-11-23"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(knitr)
+library(ggplot2) # this is primarly used to better visualise the visualisations
+```
+
+# Load Data
+
+First of all, we begin by reading the datasets from its respective CSV files. Afterwards, we inspect on each datasets to see the total rows and columns. This allow us to know the original dataset characteristics.
+
+```{r}
+# Read csv files with the directory well set beforehand
+engine <- read.csv("Engine.csv")
+auto <- read.csv("Automobile.csv")
+maint <- read.csv("Maintenance.csv")
+
+# Inspect 'Engine'' data
+print("Engines:")
+str(engine)
+summary(engine)
+```
+
+```{r}
+# Inspect 'Automobile' data
+print("Automobile:")
+str(auto)
+summary(auto)
+```
+
+```{r}
+# Inspect 'Maintenance' data
+print("Maintenance:")
+str(maint)
+summary(maint)
+```
+
+Using "str()", the overall structure of each datasets are well displayed.From the summaries above, we can see that the dataset overview can be seen as follow:
+
+- **Engine**: 8 variables with 88 rows
+- **Automobile**: 13 variables with 204 rows
+- **Maintenance**: 7 variables with 374 rows 
+
+This is the overall structure when run the datasets in R. From here, we would proceed to solve each tasks.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
