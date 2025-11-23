@@ -98,7 +98,21 @@ As we can see, there are 6 '?' and when we replace it, we end up with **34 NAs i
 
 Here, when we convert it to NA, we are simply marking the missing spots properly so R can handle them. All the real numbers and categories stays exactly the same, so the overall distribution of the dataset does not change.
 
+## 1.2 Convert categorical variables BodyStyles, FuelTypes, ErrorCodes to factors
+```{r}
+# Convert categorical variables to factors
 
+# Converting 'BodyStyles' from character to factor
+autos$BodyStyles <- as.factor(autos$BodyStyles) 
+
+# Converting 'FuelTypes' from character to factor
+engines$FuelTypes <- as.factor(engines$FuelTypes) 
+
+# Converting 'ErrorCodes' from character to factor
+maint$ErrorCodes <- as.factor(maint$ErrorCodes) 
+```
+
+By using **"as.factor"** we transform the 'BodyStyles', 'FuelTypes', and 'ErrorCodes' from characters types to factors. This is to ensure the that variables are recognised as a factor rather than numbers or simple text. This way, R can read them correectly to group data when plotting and analysing.
 
 
 
