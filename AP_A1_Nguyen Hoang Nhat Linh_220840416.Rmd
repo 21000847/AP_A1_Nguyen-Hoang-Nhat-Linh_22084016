@@ -51,7 +51,52 @@ Using "str()", the overall structure of each datasets are well displayed.From th
 This is the overall structure when run the datasets in R. From here, we would proceed to solve each tasks.
 
 
+# Task 1:  
 
+## 1.1: Write the code to inspect the data structure and present the data: The missing values in the dataset were written as "?", replace any "?" with NA; Write code to check: after replacing, how many rows were affected in total? Does this change alter the data distribution?
+
+### Count "?" and replace it with "NA"
+
+In R, the question mark **'?'** is not recognize by as a missing value. This could cause errors in statistical analysis. Therefore, by replacing **'?' to 'NA'** we can code to find out the missing values.
+
+In this question, using the *"mutate()"* function with *"(across(where(is.character)))"*,we can scan all character columns and replace all the '?' to 'NA'.
+
+```{r}
+# Count "?" and replace it with "NA"
+NA_replace <- function(df, name) {
+  # Count rows with "?"
+  rows_with_q <- df %>% 
+    filter(if_any(everything(), ~ . == "?")) %>% 
+    # counts total number of rows that contain at least one instance '?' (everything)
+    nrow()
+  
+  # Replace "?" with NA
+  df_clean <- df %>%
+    mutate(across(where(is.character), ~na_if(., "?"))) 
+  # scan all character columns and replace all the '?' to 'NA'
+  
+  print(paste("Number of rows affected in", name, ":", rows_with_q))
+  return(df_clean)
+}
+
+# Apply cleaning
+engines <- NA_replace(engine, "Engines")
+autos <- NA_replace(auto, "Automobiles")
+maint <- NA_replace(maint, "Maintenance")
+```
+
+In total, there are 6 rows being affected (all in 'Engine').
+
+```{r}
+# Total NA
+print(paste("Total NAs in Engine:", sum(is.na(engines))))
+print(paste("Total NAs in Automobile:", sum(is.na(autos))))
+print(paste("Total NAs in Engine:", sum(is.na(maint))))
+```
+
+As we can see, there are 6 '?' and when we replace it, we end up with **34 NAs in total**.
+
+Here, when we convert it to NA, we are simply marking the missing spots properly so R can handle them. All the real numbers and categories stays exactly the same, so the overall distribution of the dataset does not change.
 
 
 
