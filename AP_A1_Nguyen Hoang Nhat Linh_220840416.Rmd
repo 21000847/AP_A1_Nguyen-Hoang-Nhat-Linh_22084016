@@ -112,9 +112,32 @@ engines$FuelTypes <- as.factor(engines$FuelTypes)
 maint$ErrorCodes <- as.factor(maint$ErrorCodes) 
 ```
 
-By using **"as.factor"** we transform the 'BodyStyles', 'FuelTypes', and 'ErrorCodes' from characters types to factors. This is to ensure the that variables are recognised as a factor rather than numbers or simple text. This way, R can read them correectly to group data when plotting and analysing.
+By using **"as.factor"** we transform the 'BodyStyles', 'FuelTypes', and 'ErrorCodes' from characters types to factors. This is to ensure the that variables are recognised as a factor rather than numbers or simple text. This way, R can read them correctly to group data when plotting and analysing.
 
+## 1.3 Replace the missing values in column Horsepower with the median horsepower
+```{r}
+# Convert Horsepower to numeric
+engines$Horsepower <- as.numeric(engines$Horsepower)
 
+# This is just an extra step to make sure it is also numeric
+engines$EngineSize <- as.numeric(engines$EngineSize)
+
+# since the Horsepower column is numeric
+hp_median <- median(engines$Horsepower, na.rm = TRUE)
+
+# Replace NA with the median
+engines <- engines %>%
+  mutate(Horsepower = ifelse(is.na(Horsepower), hp_median, Horsepower)) 
+# checks every row in the Horsepower column.
+# If a value is missing "(is.na())", it replaces it with the calculated 'hp_median'
+# otherwise it keeps the original value
+
+print(paste("Missing Horsepower values remaining:", sum(is.na(engines$Horsepower))))
+```
+
+In this situation, 'Horsepower' is converted to numeric so calculations work. Then, imputing the missing values in 'Horsepower' column with **median** would offer a better better than using mean. As median is less sensitive to outliers than mean, making it a better option to chose considering the central tendency of this variable. 
+
+Additionally, **"mutate()"** and **"ifelse()"** were used to select only the NAs to replace with the calculated "hp_median" above. This would eventually preserves the integrity of the existing data.
 
 
 
