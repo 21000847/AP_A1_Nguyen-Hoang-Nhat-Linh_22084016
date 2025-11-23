@@ -256,6 +256,36 @@ By applying distinct **"(EngineModel, .keep_all = TRUE)"**, we can ensure that e
 
 We then use **"inner_join"** to combine the 'Automobile' data (for MPG) and the  'engines_unique data' (for FuelTypes), creating the normalized dataset, where each car has one unique set of engine specifications (this is essential for statistical testing).
 
+## 3.1 Do diesel cars have higher average CityMpg than gasoline cars? Provide statistical evidence
+
+To compare the fuel efficiency of diesel and gasoline cars, a two-Sample t-test was performed. This statistical test would allow us to compare how the mean in 'CityMPG' differs between two independent groups (diesel vs. gas).
+
+Here, 'CityMpg' would act as a measurement to compare these two.
+
+```{r}
+# T-test to compare the means of CityMpg and FuelTypes (Gas & Diesel).
+print("--- T-Test: Diesel vs Gas CityMpg ---") # the title
+t_test_result <- t.test(CityMpg ~ FuelTypes, data = car_engine_merged) # employing t-test
+print(t_test_result)
+```
+
+In our t-test, we can see that it showed a p-value of **0.0014**, which is far below the standard significance threshold of 0.05 ($\alpha$). This indicates strong statistical evidence that the average 'CityMpg' is different between diesel and gasoline cars.
+
+More importantly, the mean in group shows that diesel average **30.3 MPG**, while gas averaged **24.68 MPG**. This means that diesel cars have a higher mean and we can say that diesel cars really do bring back better fuel efficiency than gasoline.
+
+### Visualisation
+
+```{r}
+# Visualization
+ggplot(car_engine_merged, aes(x = FuelTypes, y = CityMpg, fill = FuelTypes)) +
+  geom_boxplot() + # this creates a box plot
+  labs(title = "City MPG Distribution by Fuel Type", # the title
+       y = "City Miles Per Gallon (MPG)",  # names the y axis
+       x = "Fuel Type") +  # names the x axis
+  theme_minimal() # removes the default gray background
+```
+
+To better see the differences, a boxplot displaying these 2 numeric variables. Here, we can see that diesel cars have a highe median 'CityMpg', and the majority distribution sits above gasoline's.
 
 
 
