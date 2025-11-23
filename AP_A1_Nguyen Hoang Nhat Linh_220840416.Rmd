@@ -223,7 +223,38 @@ Here, the histogram confirms it. We can see a positive correlation between engin
 As we can observe, most of the times the larger the engines the horsepower would be higher as well. However, some outliers (special cases) would offer a different horsepower outcome. This also means that, not all engine size larger than 300+ would bring back the best 'Horsepower' range.
 
 
+# Task 3:
 
+## Clean data (eliminates duplications)
+
+Before we perform the analysis, it is important to ensure that the 'Engine' dataset does not contain duplicate. Since if duplicates exist in the engines table, merging it with the autos table would result in a "many-to-many" join.
+
+```{r}
+# Clean data
+print("Duplicate Engine Models found (original Engine data):")
+duplicate_engines <- engines %>% # taking the 'engines' data frame
+  group_by(EngineModel) %>% # creating groups for every unique value in 'EngineModel'
+  filter(n() > 1) # counts the number of rows in the current group, count groups greater than 1
+print(duplicate_engines)
+
+```
+
+As we can see here, these are the duplicates within engine.
+
+
+```{r}
+# Create a unique version to merge reliably (without duplicates)
+engines_unique <- engines %>%
+  distinct(EngineModel, .keep_all = TRUE) # ensure each engine model appears only once
+
+# Merge only Automobile and unique Engine data
+car_engine_merged <- inner_join(autos, engines_unique, by = "EngineModel") 
+#combine 'Automobile' (Mpg) and 'engines_unique data' (FuelTypes)
+```
+
+By applying distinct **"(EngineModel, .keep_all = TRUE)"**, we can ensure that each engine model appears only once, guaranteeing a clean one-to-one relationship when joining with the autos dataset.
+
+We then use **"inner_join"** to combine the 'Automobile' data (for MPG) and the  'engines_unique data' (for FuelTypes), creating the normalized dataset, where each car has one unique set of engine specifications (this is essential for statistical testing).
 
 
 
